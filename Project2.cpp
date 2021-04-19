@@ -1,3 +1,24 @@
+/******************************************************************************
+* CSCE 4600 - Operating Systems Section 002
+*  Instructor: Dr. Marty O'Neill
+*  Due Date: April 23rd, 2021
+*
+*  Contributors: - Gabriel Lopez (gabriellopez3@my.unt.edu)
+*                - Joseph Fergen (josephfergen@my.unt.edu)
+*                - Garret 
+*                -
+*
+*  Summary: In this program, we must develop a system that can determine
+*  whether or not a particular resource allocation graph represents a deadlock
+*  state, either through graph reduction or knot detection.
+* 
+*******************************************************************************/
+
+#include <stdio.h>
+#include <string>
+#include <vector>
+#include <sstream>
+#include <fstream>
 #include <iostream>
 #include <string>
 #include <fstream>
@@ -9,25 +30,28 @@ using namespace std;
 int main() {
     ifstream fin;
     string fileName, fileContent;
-    int numProcesses, numResources, j = 0, k = 0;
+    int numProcesses, numResources;
     bool foundProcesses = false, foundUnits = false;
     vector <int> resources;
     vector <vector<int>> inputMatrix;
 
-    fileName = "input-example.txt";
+    fileName = "input-example.txt"; // DELETE THIS AT END
+    // UNCOMMENT THIS AT END
+    // Get filename from user
     // cout << "Enter name of file containing data: ";
     // cin >> fileName;
     fin.open(fileName);
 
+    // Check filename and ask for correct file name until it works
     while (fin.fail()) {
         cout << "Invalid file name. Try again: ";
         cin >> fileName;
         fin.open(fileName);
     }
 
+    // Read each line of file
     while (getline(fin, fileContent)) {
-        // trim(fileContent);
-
+        // Skip line if empty or starts with a '%'
         if (fileContent.empty() || fileContent[0] == '%') {
             continue;
         }
@@ -46,7 +70,6 @@ int main() {
             continue;
         }
 
-        // cout << "fileContent: " << fileContent.length() << endl;
         // Find and set the units for each resource
         if (!foundUnits) {
             istringstream ss(fileContent);
