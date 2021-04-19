@@ -97,13 +97,21 @@ int main() {
         }
     }
 
+    // Print out resource units
+    cout << "Resource units: ";
+    for (int i = 0; i < resources.size(); i++) {
+        cout << resources[i] << " ";
+    }
+    cout << endl;
+
     // Print out adjacency matrix
-    // for (int i = 0; i < inputMatrix.size(); i++) {
-    //     for (int j = 0; j < inputMatrix[i].size(); j++) {
-    //         cout << inputMatrix[i][j] << " ";
-    //     }
-    //     cout << endl;
-    // }
+    cout << "Adjacency matrix: " << endl;
+    for (int i = 0; i < inputMatrix.size(); i++) {
+        for (int j = 0; j < inputMatrix[i].size(); j++) {
+            cout << inputMatrix[i][j] << " ";
+        }
+        cout << endl;
+    }
     
     fin.close();
     return 0;
