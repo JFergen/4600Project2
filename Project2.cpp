@@ -47,7 +47,7 @@ int main() {
     // Read each line of file
     while (getline(fin, fileContent)) {
         // Skip line if empty or starts with a '%'
-        if (fileContent.empty() || fileContent[0] == '%') {
+        if (fileContent.empty() || fileContent[0] == '\r' || fileContent[0] == '%') {
             continue;
         }
 
