@@ -23,36 +23,45 @@
 #include <algorithm>
 using namespace std;
 
-vector<int> getReachableSet(vector<vector<int>> inputMatrix, int node)
+vector<bool> getReachableSet(vector<vector<int>> inputMatrix, int node)
 {
-    vector<int> ReachableSet;
+    vector<bool> ReachableSet;
+    ReachableSet.resize(inputMatrix.size(), false);
     queue<int> Queue;
-    ReachableSet.push_back(node);
+    ReachableSet[node] = true;
     for (int i = 0; i<inputMatrix.size(); i++)
     {
         if(inputMatrix[node][i] == 1)
         {
-            Queue.push(i);
+            if(ReachableSet[i] == false)
+            {
+                Queue.push(i);
+            }
         }
     }
     while(!Queue.empty())
     {
         node = Queue.front();
-        ReachableSet.push_back(node);
+        ReachableSet[node] = true;
         Queue.pop();
         for (int i = 0; i<inputMatrix.size(); i++)
         {
             if(inputMatrix[node][i] == 1)
             {
-                auto finder = find(begin(ReachableSet), end(ReachableSet), i); //Searchs to find the new node in the reachable set already
-                if(finder == end(ReachableSet)) //This means that it wasn't found
+                if(ReachableSet[i] == false)
                 {
                     Queue.push(i);
                 }
             }
         }
     }
-
+    /*cout<<"These are true: ";
+    for(int i=0; i<ReachableSet.size(); i++)
+    {
+        if(ReachableSet[i]==true)
+        cout<<i<<" ";
+    }
+    cout<<endl;*/
     return ReachableSet;
 }
 
@@ -147,18 +156,28 @@ int main() {
         cout << endl;
     }
     
-    vector<int> KnotSolution, KnotTest;
+    vector<bool> KnotSolution, KnotTest;
     bool Knot = true;
     bool KnotFound = false;
     for(int i = 0; i < inputMatrix.size(); i++)
     {
+        Knot = true;
+        KnotFound = false;
+
+//        cout<<"Finding KnotSolution"<<endl;
         KnotSolution = getReachableSet(inputMatrix, i);
         for(int j = 0; j < KnotSolution.size(); j++)
         {
-            if(KnotSolution[j] != i)
+            if(j != i)
             {
-                KnotTest = getReachableSet(inputMatrix, KnotSolution[j]);
-                Knot = equal(KnotSolution.begin(), KnotSolution.end(), KnotTest.begin());
+//                cout<<"Finding KnotTest"<<endl;
+                KnotTest = getReachableSet(inputMatrix, j);
+                /*Knot = (KnotTest && KnotSolution);
+                cout << Knot <<endl;*/
+                if(KnotTest != KnotSolution)
+                {
+                    Knot = false;
+                }
             }
             if(Knot == false)
             {
@@ -169,6 +188,7 @@ int main() {
                 KnotFound = true;
             }
         }
+
         if(KnotFound == true)
         {
             break;
@@ -181,7 +201,7 @@ int main() {
         cout<<"Knot: \n";
         for(int i=0; i < KnotSolution.size(); i++)
         {
-            cout<<KnotSolution[i]<<" ";
+            cout<<i<<" ";
         }
         cout << endl;
     }
