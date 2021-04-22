@@ -19,8 +19,42 @@
 #include <string>
 #include <sstream>
 #include <vector>
+#include <queue>
 #include <algorithm>
 using namespace std;
+
+vector<int> getReachableSet(vector<vector<int>> inputMatrix, int node)
+{
+    vector<int> ReachableSet;
+    queue<int> Queue;
+    ReachableSet.push_back(node);
+    for (int i = 0; i<inputMatrix.size(); i++)
+    {
+        if(inputMatrix[node][i] == 1)
+        {
+            Queue.push(i);
+        }
+    }
+    while(!Queue.empty())
+    {
+        node = Queue.front();
+        ReachableSet.push_back(node);
+        Queue.pop();
+        for (int i = 0; i<inputMatrix.size(); i++)
+        {
+            if(inputMatrix[node][i] == 1)
+            {
+                auto finder = find(begin(ReachableSet), end(ReachableSet), i); //Searchs to find the new node in the reachable set already
+                if(finder == end(ReachableSet)) //This means that it wasn't found
+                {
+                    Queue.push(i);
+                }
+            }
+        }
+    }
+
+    return ReachableSet;
+}
 
 int main() {
     ifstream fin;
@@ -113,6 +147,51 @@ int main() {
         cout << endl;
     }
     
+    vector<int> KnotSolution, KnotTest;
+    bool Knot = true;
+    bool KnotFound = false;
+    for(int i = 0; i < inputMatrix.size(); i++)
+    {
+        KnotSolution = getReachableSet(inputMatrix, i);
+        for(int j = 0; j < KnotSolution.size(); j++)
+        {
+            if(KnotSolution[j] != i)
+            {
+                KnotTest = getReachableSet(inputMatrix, KnotSolution[j]);
+                Knot = equal(KnotSolution.begin(), KnotSolution.end(), KnotTest.begin());
+            }
+            if(Knot == false)
+            {
+                break;
+            }
+            if((Knot == true) && (j == (KnotSolution.size()-1)))
+            {
+                KnotFound = true;
+            }
+        }
+        if(KnotFound == true)
+        {
+            break;
+        }
+    }
+
+    if(KnotFound == true)
+    {
+        cout<<"Knot Found\n";
+        cout<<"Knot: \n";
+        for(int i=0; i < KnotSolution.size(); i++)
+        {
+            cout<<KnotSolution[i]<<" ";
+        }
+        cout << endl;
+    }
+
+    else
+    {
+        cout<<"No knot found\n";
+    }
+
+
     fin.close();
     return 0;
 }
