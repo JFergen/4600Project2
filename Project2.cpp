@@ -1,4 +1,5 @@
-/******************************************************************************
+/*
+*****************************************************************************
 * CSCE 4600 - Operating Systems Section 002
 *  Instructor: Dr. Marty O'Neill
 *  Due Date: April 23rd, 2021
@@ -12,7 +13,8 @@
 *  whether or not a particular resource allocation graph represents a deadlock
 *  state, either through graph reduction or knot detection.
 * 
-*******************************************************************************/
+******************************************************************************
+*/
 
 #include <iostream>
 #include <fstream>
