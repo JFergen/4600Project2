@@ -5,7 +5,7 @@
 *
 *  Contributors: - Gabriel Lopez (gabriellopez3@my.unt.edu)
 *                - Joseph Fergen (josephfergen@my.unt.edu)
-*                - Garret 
+*                - Garrett Morgan (garrettmorgan3@my.unt.edu) 
 *                -
 *
 *  Summary: In this program, we must develop a system that can determine
