@@ -7,7 +7,7 @@
 *  Contributors: - Gabriel Lopez (gabriellopez3@my.unt.edu)
 *                - Joseph Fergen (josephfergen@my.unt.edu)
 *                - Garrett Morgan (garrettmorgan3@my.unt.edu) 
-*                -
+*                - James Wolf (jameswolf@my.unt.edu)
 *
 *  Summary: In this program, we must develop a system that can determine
 *  whether or not a particular resource allocation graph represents a deadlock
@@ -168,22 +168,25 @@ int main() {
         //Testing against KnotSolution
         for(int j = 0; j < KnotSolution.size(); j++)
         {
-            if(j != i) //If i and j are the same they have the same reachable set so no need to retest
+            if(KnotSolution[j] == true) //If in the reachable set
             {
-                KnotTest = getReachableSet(inputMatrix, j);
-                if(KnotTest != KnotSolution) //If the sets aren't the same it's not a knot
+                if(j != i) //If i and j are the same they have the same reachable set so no need to retest
                 {
-                    Knot = false;
+                    KnotTest = getReachableSet(inputMatrix, j);
+                    if(KnotTest != KnotSolution) //If the sets aren't the same it's not a knot
+                    {
+                        Knot = false;
+                    }
                 }
-            }
-            if(Knot == false) //If you can prove something isn't a knot at one place, it's not a knot
-            {
-                break; //So try again
-            }
+                if(Knot == false) //If you can prove something isn't a knot at one place, it's not a knot
+                {
+                    break; //So try again
+                }
 
-            if((Knot == true) && (j == (KnotSolution.size()-1))) //However if the last j is used and Knot is still true
-            {
-                KnotFound = true; //Then we found a Knot
+                if((Knot == true) && (j == (KnotSolution.size()-1))) //However if the last j is used and Knot is still true
+                {
+                    KnotFound = true; //Then we found a Knot
+                }
             }
         }
 
