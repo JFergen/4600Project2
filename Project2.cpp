@@ -156,14 +156,25 @@ int main() {
     vector<bool> KnotSolution, KnotTest;
     bool Knot = true; //This is used to find where the Knot is no longer true
     bool KnotFound = false; //This is used to see if a Knot fully exists
-    
+    int LastPosition = 0; //This is used to mark the last 
     //Knot Detection
     for(int i = 0; i < inputMatrix.size(); i++) 
     {
         Knot = true; //Both need to be reset
-        KnotFound = false; 
+        KnotFound = false;
+        LastPosition = 0; 
 
         KnotSolution = getReachableSet(inputMatrix, i); //Get everything reachable from i
+
+        //Find the last possible node
+        for(int j = 0; j < KnotSolution.size(); j++)
+        {
+            if(KnotSolution[j] == true) 
+            {
+                    LastPosition = j; //Initially there was an if making sure j was greater than last postion
+                                      //You don't actually need it though as lastposition will always be less
+            }
+        }
 
         //Testing against KnotSolution
         for(int j = 0; j < KnotSolution.size(); j++)
@@ -183,7 +194,7 @@ int main() {
                     break; //So try again
                 }
 
-                if((Knot == true) && (j == (KnotSolution.size()-1))) //However if the last j is used and Knot is still true
+                if((Knot == true) && (j == LastPosition)) //However if the last j is used and Knot is still true
                 {
                     KnotFound = true; //Then we found a Knot
                 }
