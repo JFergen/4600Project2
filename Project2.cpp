@@ -162,7 +162,6 @@ int main() {
     {
         Knot = true; //Both need to be reset
         KnotFound = false;
-        LastPosition = 0; 
 
         KnotSolution = getReachableSet(inputMatrix, i); //Get everything reachable from i
 
